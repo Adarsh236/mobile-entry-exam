@@ -32,6 +32,7 @@ export type Item = {
 export type ApiClient = {
 	getOrders: () => Promise<Order[]>;
 	getItem: (itemId: string) => Promise<Item>;
+	updateOrder: (id: number, fulfillmentStatus: string) => Promise<Order[]>;
 }
 
 export const createApiClient = (): ApiClient => {
@@ -41,6 +42,9 @@ export const createApiClient = (): ApiClient => {
 		},
 		getItem: (itemId: string) => {
 			return axios.get(`http://localhost:3232/api/items/${itemId}`).then((res) => res.data);
+		}, updateOrder: (id: number, fulfillmentStatus: string) => {
+			
+			return axios.put(`http://localhost:3232/api/orders`, {id: id, status: fulfillmentStatus}).then((res) => res.data);
 		}
 	}
 };
