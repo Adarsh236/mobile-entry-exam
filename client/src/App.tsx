@@ -1,4 +1,20 @@
 import React from 'react';
+import { Provider } from 'react-redux'
+import { store } from './redux/store'
+import './App.scss';
+import Orders from './pages/Orders'
+
+const App: React.FC = () => {
+	return (
+		<Provider store={store}>
+			<Orders />
+		</Provider>
+	);
+}
+
+export default App
+
+/*import React from 'react';
 import './App.scss';
 import { createApiClient, Order } from './api';
 import { CustomFilter } from './components/CustomFilter';
@@ -73,7 +89,7 @@ export type AppState = {
 const api = createApiClient();
 const api2 = ApiService();
 
-export class App extends React.PureComponent<{}, AppState> {
+ export class App extends React.PureComponent<{}, AppState> {
 
 	state: AppState = {
 		search: '',
@@ -251,4 +267,4 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 }
 
-export default App;
+export default App; */
