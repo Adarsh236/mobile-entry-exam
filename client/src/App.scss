@@ -20,7 +20,7 @@ body {
   }
 
   header {
-    width: 1000px;
+    //width: 1000px;
     border-radius: 6px;
     background-color: #fff;
     box-shadow: 0 2px 6px 1px #e1e5e8;
@@ -28,10 +28,14 @@ body {
     border: 1px solid #fff;
     padding: 10px 10px;
     position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+    width: 100%;
 
     input {
       width: 980px;
-      padding: 4px;
+      //padding: 4px;
       text-overflow: ellipsis;
       display: inline-block;
       color: #20455e;
@@ -40,6 +44,8 @@ body {
       transition: border 0.1s ease;
       resize: none;
       border: none;
+      position: relative;
+      margin: 2px;
 
       &::placeholder {
         color: #b6c1cd;
@@ -53,7 +59,7 @@ body {
 
     .orderCard {
       position: relative;
-      width: 980px;
+      //width: 980px;
       border-radius: 8px;
       background-color: white;
       box-shadow: 0 2px 6px 1px #e1e5e8;
@@ -61,6 +67,11 @@ body {
       border: 1px solid #fff;
       padding: 10px 20px;
       transition: box-shadow 0.2s ease-in-out;
+
+      margin-left: auto;
+      margin-right: auto;
+      display: inline-block;
+      width: 100%;
 
       &:hover {
         box-shadow: 0 2px 6px 1px #a5a5a5;
@@ -117,6 +128,17 @@ body {
     color: #3899ec;
     font-weight: 500;
     font-size: 12px;
+  }
+
+  .button {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+    color: #000000;
+    background-color: #d6d6d6;
+    text-align: center;
+    border-color: #3899ec;
+    border-radius: 2em;
   }
 }
 @import "~bootstrap/scss/bootstrap";

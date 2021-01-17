@@ -1,51 +1,10 @@
-import React, { FC, useState, ReactElement } from 'react';
-import { Dropdown, DropdownButton, FormControl } from 'react-bootstrap';
+import React, { FC, useState, useEffect } from 'react';
+import { Col, Row, Container, Dropdown, DropdownButton, ButtonGroup, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { getFilteredData } from '../utils';
+import { filterList } from '../utils/constants';
+import { OrderType, getOrders } from '../redux/actions/orders'
 
-type propsType = {
-    name: string,
-    id: number,
-    bio?: string,
-}
-
-let filters = [
-    {
-        "id": 1,
-        "name": "fulfilled",
-        "checked": false,
-        "status": "fulfillmentStatus"
-    }, {
-        "id": 2,
-        "name": "not-fulfilled",
-        "checked": false,
-        "status": "fulfillmentStatus"
-    }
-    , {
-        "id": 3,
-        "name": "canceled",
-        "checked": false,
-        "status": "billingInfo"
-
-    }
-    , {
-        "id": 4,
-        "name": "paid",
-        "checked": false,
-        "status": "billingInfo"
-    }
-    , {
-        "id": 5,
-        "name": "not-paid",
-        "checked": false,
-        "status": "billingInfo"
-    }, {
-        "id": 6,
-        "name": "refunded",
-        "checked": false,
-        "status": "billingInfo"
-    }
-]
-
-type FilterType = {
+export type FilterType = {
     id: number;
     name: string;
     checked: boolean;
@@ -53,33 +12,72 @@ type FilterType = {
 }
 
 function DropdownFilters(props: any) {
-    const [showOrders, setShowOrders] = useState(false);
+    const [search, setSearch] = useState<string>('');
+    const [dropdownFilters, setDropdownFilters] = useState<FilterType[]>(filterList);
+
+    let searchDebounce: any = null;
+
+    const onSearch = async (value: string) => {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(async () => {
+            setSearch(value)
+        }, 300);
+    };
 
     const handleSelect = (e: any) => {
-        let updateList = filters?.map((data) => {
+        let updateList = dropdownFilters?.map((data) => {
             if (data.name === e) data.checked = !data.checked;
             return data;
         })
-        console.log(props);
-        /* this.setState({
-             filter: updateList
-         });*/
+        setDropdownFilters(updateList);
+        updateFilterOrderList();
     }
-    console.log(props);
+
+    const handleClick = (e: any) => {
+        updateFilterOrderList();
+    }
+
+    const updateFilterOrderList = () => {
+        const updateList = getFilteredData(props.orderList, dropdownFilters, search);
+        props.onUpdate(updateList);
+    }
+
+    const renderDropdownItems = () => (
+        dropdownFilters?.map((type, i) => (
+            <Dropdown.Item eventKey={type.name} active={type.checked}>
+                {type.name}
+            </Dropdown.Item>))
+    )
 
     return (
-        <DropdownButton
-            alignRight
-            title="Select Filter"
-            id="dropdown-menu-align-right"
-            onSelect={handleSelect}>
-            {
-                filters?.map((type, i) => (
-                    <Dropdown.Item eventKey={type.name} active={type.checked}>
-                        {type.name}
-                    </Dropdown.Item>))
-            }
-        </DropdownButton>
+        <Container fluid className="p-0">
+            <Row noGutters>
+                <Col sm="auto" md={2}>
+                    <DropdownButton
+                        as={ButtonGroup}
+                        title="Select Filter"
+                        menuAlign={{ lg: 'right' }}
+                        id="dropdown-button-right-responsive-1"
+                        onSelect={handleSelect}>
+                        {renderDropdownItems()}
+                    </DropdownButton>
+                </Col>
+
+                <Col sm="auto" md={10}>
+                    <InputGroup>
+                        <FormControl
+                            placeholder="Search"
+                            aria-label="Search"
+                            onChange={(e) => onSearch(e.target.value)}
+                            aria-describedby="basic-addon1"
+                            type="search"
+                        />
+                        <Button variant="outline-primary" onClick={(e) => handleClick(e)}>Search</Button>
+                    </InputGroup>
+                </Col>
+            </Row>
+        </Container>
     );
 }
+
 export default DropdownFilters;
