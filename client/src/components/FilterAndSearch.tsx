@@ -1,17 +1,10 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Col, Row, Container, Dropdown, DropdownButton, ButtonGroup, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { getFilteredData } from '../utils';
 import { filterList } from '../utils/constants';
-import { OrderType, getOrders } from '../redux/actions/orders'
+import { FilterType } from '../models';
 
-export type FilterType = {
-    id: number;
-    name: string;
-    checked: boolean;
-    status: string;
-}
-
-function DropdownFilters(props: any) {
+export default function FilterAndSearch(props: any) {
     const [search, setSearch] = useState<string>('');
     const [dropdownFilters, setDropdownFilters] = useState<FilterType[]>(filterList);
 
@@ -44,7 +37,7 @@ function DropdownFilters(props: any) {
 
     const renderDropdownItems = () => (
         dropdownFilters?.map((type, i) => (
-            <Dropdown.Item eventKey={type.name} active={type.checked}>
+            <Dropdown.Item key={i} eventKey={type.name} active={type.checked}>
                 {type.name}
             </Dropdown.Item>))
     )
@@ -79,5 +72,3 @@ function DropdownFilters(props: any) {
         </Container>
     );
 }
-
-export default DropdownFilters;

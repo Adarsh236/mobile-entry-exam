@@ -1,36 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { OrderType, getOrders } from '../redux/actions/orders'
-import { getAssetByStatus } from '../utils';
+import { getItems } from '../redux/actions/items'
+import { AppStateType } from '../redux/store'
+import { useDispatch, useSelector } from 'react-redux';
+import Items from './Items';
 
-function CustomModal(props: any) {
-    console.log(props);
-    let list = props.order ? props.order : [];
-    let dateTime = new Date(list.createdDate);
+export default function CustomModal(props: any) {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const itemList = props.order?.items.map((data: any) => (data.id));
+        if (itemList?.length) dispatch(getItems(itemList));
+    }, [dispatch]);
+
+    const productList = useSelector((state: AppStateType) => state.itemReducer.items);
+    const isLoading = useSelector((state: AppStateType) => state.itemReducer.isLoading);
+
     return (
         <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
+            {...props} size="lg"
+            aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Body>
                 <h2> Products Details: </h2>
-                <div className='orders'>
-                    {list.items?.map((data: { quantity: number }) => (
-                        <div className={'orderCard'}>
-                            <div className={'generalData'}>
-                                <img src={getAssetByStatus("not-fulfilled")} />
-                            </div>
-                            <div className={'fulfillmentData'}>
-                                <h4>Name: yy</h4>
-                                <h4>Quantities: {data.quantity} Items</h4>
-                                <h4>Order Placed: {dateTime.toLocaleDateString()}</h4>
-                                <h4>Placed Time: {dateTime.toLocaleTimeString('en-US')}</h4>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                {isLoading ? <h2>Loading...</h2> :
+                    <Items order={props.order}
+                        products={productList} />}
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={props.onHide}>Close</Button>
@@ -38,5 +31,3 @@ function CustomModal(props: any) {
         </Modal>
     );
 }
-
-export default CustomModal;

@@ -1,10 +1,10 @@
-type Url = {
+type UrlType = {
     BASE_URL: string;
     ORDERS: string;
     ITEMS: string;
 }
 
-const Urls: Url = {
+const Urls: UrlType = {
     BASE_URL: 'http://localhost:3232/api',
     ORDERS: '/orders',
     ITEMS: '/items',

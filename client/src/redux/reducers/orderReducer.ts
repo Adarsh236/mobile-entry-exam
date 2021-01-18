@@ -1,5 +1,6 @@
 import { GET_ORDERS_REQUEST, GET_ORDERS_COMMIT } from './../actions/types';
-import { OrdersActionTypes, OrderType } from '../actions/orders'
+import { OrdersActionTypes } from '../actions/orders'
+import { OrderType } from '../../models';
 
 export interface IOrdersState {
     isLoading: boolean

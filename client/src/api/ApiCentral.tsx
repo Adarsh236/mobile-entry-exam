@@ -1,35 +1,5 @@
 import axios from 'axios';
 import Urls from './Urls';
-import * as React from 'react';
-
-export type Customer = {
-    name: string;
-}
-
-export type BillingInfo = {
-    status: string;
-}
-
-export type Price = {
-    formattedTotalPrice: string;
-}
-
-export type Order = {
-    id: number;
-    createdDate: string;
-    fulfillmentStatus: string;
-    billingInfo: BillingInfo;
-    customer: Customer;
-    itemQuantity: number;
-    price: Price;
-}
-
-export type Item = {
-    id: string;
-    name: string;
-    price: number;
-    image: string;
-}
 
 async function Request(options: any) {
 

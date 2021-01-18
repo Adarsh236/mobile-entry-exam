@@ -1,42 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import '../App.scss';
 import { Nav, Navbar, Dropdown, ButtonGroup, Badge, Button } from 'react-bootstrap';
-import DropdownFilters from '../components/DropdownFilters';
+import { useDispatch, useSelector } from 'react-redux';
+import FilterAndSearch from '../components/FilterAndSearch';
 import Orders from './Orders';
-import Items from './Items';
 import { getNotDeliveredOrders } from '../utils';
-import { OrderType, getOrders } from '../redux/actions/orders'
-import { AppStateType, AppActionsType } from '../redux/store'
-import { useDispatch, useSelector, connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { bindActionCreators } from 'redux';
+import { getOrders } from '../redux/actions/orders'
+import { AppStateType } from '../redux/store'
+import { OrderType } from '../models';
 
-interface IProps { }
-
-interface ILinkStateProps {
-    orders: OrderType[];
-}
-
-interface ILinkDispatchProps {
-    getOrders: () => void;
-}
-
-type LinkPropsType = IProps & ILinkStateProps & ILinkDispatchProps;
-
-function Home() {
+export default function Home() {
     const dispatch = useDispatch();
-
+    //Call API and update list
     useEffect(() => { dispatch(getOrders()); }, [dispatch]);
 
     const orderList = useSelector((state: AppStateType) => state.orderReducer.orders);
     const isLoading = useSelector((state: AppStateType) => state.orderReducer.isLoading);
 
-    const [showOrders, setShowOrders] = useState<boolean>(true);
     const [filteredOrderList, setFilteredOrderList] = useState<OrderType[]>();
 
     const notDelivered: OrderType[] = orderList ? getNotDeliveredOrders(orderList) : [];
 
+    //First time the list will be empty
     if (filteredOrderList === undefined && orderList.length > 0) setFilteredOrderList(orderList);
+
+    const dropdownMenu = () => (
+        <Dropdown.Menu className="dropdown-menu">
+            {notDelivered?.map((type, i) => (
+                <Dropdown.Item key={i} eventKey={i + ''}>
+                    {++i}) Order ID: {type.id}
+                </Dropdown.Item>))
+            }
+        </Dropdown.Menu>
+    )
 
     return (
         <main>
@@ -45,49 +41,27 @@ function Home() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/home" onSelect={(e: any) => setShowOrders(true)}>Orders</Nav.Link>
-                        <Nav.Link href="#link" onSelect={(e: any) => setShowOrders(false)}>Items</Nav.Link>
+                        <Nav.Link href="/home">Orders</Nav.Link>
                     </Nav>
-
                     <Dropdown as={ButtonGroup} className="float-right">
                         <Button variant="info">Not Delivered <Badge variant="light">{notDelivered.length}</Badge></Button>
                         <Dropdown.Toggle split variant="info" id="dropdown-split-basic" />
-                        <Dropdown.Menu>
-                            {
-                                notDelivered?.map((type, i) => (
-                                    <Dropdown.Item eventKey={i + ''}>
-                                        {++i}) Order ID: {type.id}
-                                    </Dropdown.Item>))
-                            }
-                        </Dropdown.Menu>
+                        {dropdownMenu()}
                     </Dropdown>
                 </Navbar.Collapse>
             </Navbar>
 
-            <h3>{showOrders ? "Orders" : "Items"}</h3>
+            <h3>Orders</h3>
 
             {isLoading ? null :
                 <header>
-                    <DropdownFilters
-                        showOrders={showOrders}
+                    <FilterAndSearch
                         orderList={orderList}
                         onUpdate={(lists: OrderType[]) => setFilteredOrderList(lists)} />
                 </header>
             }
 
-            {showOrders ? <Orders filteredOrderList={filteredOrderList} /> : <Items />}
+            {(!isLoading && filteredOrderList !== undefined) ? <Orders filteredOrderList={filteredOrderList} /> : <h2>Loading...</h2>}
         </main>
     )
 }
-
-const mapStateToProps = (state: AppStateType): ILinkStateProps => ({
-    orders: state.orderReducer.orders,
-});
-
-const mapDispatchToProps = (
-    dispatch: ThunkDispatch<AppStateType, {}, AppActionsType>
-) => ({
-    getOrders: bindActionCreators(getOrders, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)

@@ -1,29 +1,8 @@
-import ApiService from './../../api/ApiService';
-import { GET_ORDERS_REQUEST, GET_ORDERS_COMMIT } from './types';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux';
-
-type CustomerType = {
-    name: string;
-}
-
-type BillingInfoType = {
-    status: string;
-}
-
-type PriceType = {
-    formattedTotalPrice: string;
-}
-
-export type OrderType = {
-    id: number;
-    createdDate: string;
-    fulfillmentStatus: string;
-    billingInfo: BillingInfoType;
-    customer: CustomerType;
-    itemQuantity: number;
-    price: PriceType;
-}
+import ApiService from './../../api/ApiService';
+import { GET_ORDERS_REQUEST, GET_ORDERS_COMMIT } from './types';
+import { OrderType } from '../../models';
 
 interface IOrders {
     isLoading: boolean;
@@ -67,21 +46,13 @@ export const getOrders = (): ThunkAction<Promise<void>, {}, {}, AnyAction> =>
         })
     }
 
-
-/* export const getOrders = (username: string, password: string): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
-    // Invoke API
-    return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
+export const updateOrder = (id: number, fulfillmentStatus: string): ThunkAction<Promise<void>, {}, {}, AnyAction> =>
+    async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
         return new Promise<void>((resolve) => {
-            dispatch(isOrdersRequest(true))
-            console.log('Login in progress')
-            setTimeout(() => {
-                dispatch(getOrdersCommit('this_is_access_token'))
-                setTimeout(() => {
-                    dispatch(isOrdersRequest(false))
-                    console.log('Login done')
-                    resolve()
-                }, 1000)
-            }, 3000)
+            dispatch(isOrdersRequest());
+            apiService.updateOrder(id, fulfillmentStatus).then((r) => {
+                dispatch(getOrdersCommit(r));
+                resolve();
+            }).catch((e) => console.log(e));
         })
     }
-} */

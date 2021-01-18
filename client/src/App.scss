@@ -20,7 +20,6 @@ body {
   }
 
   header {
-    //width: 1000px;
     border-radius: 6px;
     background-color: #fff;
     box-shadow: 0 2px 6px 1px #e1e5e8;
@@ -35,7 +34,6 @@ body {
 
     input {
       width: 980px;
-      //padding: 4px;
       text-overflow: ellipsis;
       display: inline-block;
       color: #20455e;
@@ -59,7 +57,6 @@ body {
 
     .orderCard {
       position: relative;
-      //width: 980px;
       border-radius: 8px;
       background-color: white;
       box-shadow: 0 2px 6px 1px #e1e5e8;
@@ -139,6 +136,14 @@ body {
     text-align: center;
     border-color: #3899ec;
     border-radius: 2em;
+  }
+  .productImg {
+    height: 40%;
+    width: 40%;
+  }
+  .dropdown-menu {
+    height: 200px;
+    overflow-y: scroll;
   }
 }
 @import "~bootstrap/scss/bootstrap";

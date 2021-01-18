@@ -1,4 +1,5 @@
-export let filterList = [
+//Filters options
+export const filterList = [
     {
         "id": 1,
         "name": "fulfilled",

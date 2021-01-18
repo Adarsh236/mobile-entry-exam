@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import { apiReducer } from './apiReducer'
 import { orderReducer } from './orderReducer'
+import { itemReducer } from './itemReducer'
 
 export const rootReducer = combineReducers({
-    apiReducer,
-    orderReducer
+    orderReducer,
+    itemReducer
 })
