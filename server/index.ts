@@ -1,14 +1,11 @@
 import express from 'express';
-import bodyParser = require('body-parser');
-const {products} = require('./products.json');
+import { json } from 'body-parser';
+import routes from './src/routes';
+import { PORT } from './src/utils/constants';
 
 const app = express();
-const allOrders: any[] = require('./orders.json');
 
-const PORT = 3232;
-const PAGE_SIZE = 20;
-
-app.use(bodyParser.json());
+app.use(json());
 
 app.use((_, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
@@ -17,21 +14,13 @@ app.use((_, res, next) => {
 	next();
 });
 
-app.get('/api/orders', (req, res) => {
-	const page = <number>(req.query.page || 1);
-	const orders: any[] = allOrders.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-	res.send(orders);
-});
+// all routes
+app.use(routes());
 
-app.get('/api/items/:itemId', (req, res) => {
-	const itemId = <string>(req.params.itemId);
-	const size = <string>(req.query.size || 'large');
-	const product = products[itemId];
-	res.send({
-		id: itemId,
-		name: product.name,
-		price: product.price,
-		image: product.images[size]
+// 404
+app.use(function (req, res) {
+	res.status(404).json({
+		status: 'Page does not exist',
 	});
 });
 
