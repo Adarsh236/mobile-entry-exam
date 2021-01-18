@@ -43,6 +43,7 @@ export default function Home() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="/home">Orders</Nav.Link>
+                        <Nav.Link href="/home">Adarsh Verma</Nav.Link>
                     </Nav>
                     <Dropdown as={ButtonGroup} className="float-right">
                         <Button variant="info">Not Delivered <Badge variant="light">{notDelivered.length}</Badge></Button>

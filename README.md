@@ -1,7 +1,9 @@
 # Wix Mobile Entry Level Exam
 
+Name : Adarsh Verma (adarshverma11236@gmail.com)
 In this exam, you will extend and add new features to a back-office order management system. The task's main purpose is to test your ability to learn new topics and deliver high quality digital products. It combines building UI components and a touch of server development as well.
 While no previous background is required to complete this task or to apply to this position, we do recommend getting to a basic level on the following subjects:
+
 - Git
 - Javascript / TypeScript
 - HTML & CSS
@@ -9,10 +11,11 @@ While no previous background is required to complete this task or to apply to th
 - Node.js
 
 ## Getting Started
+
 1. Make sure you have a [GitHub](https://github.com) account
 2. Go [here](https://github.com/new/import) and import this repository into your account. Make sure to select the **private** option
 3. [Clone](https://github.com/wix-incubator/mobile-students-exam) your new repository to your computer
-4. Make sure you have *Node.js* 10 or higher and *npm* 6 or higher installed
+4. Make sure you have _Node.js_ 10 or higher and _npm_ 6 or higher installed
 5. Install the project dependencies by running `npm install` from the project's directory (using a terminal)
 6. Run the project by running `npm start`
 
@@ -27,9 +30,9 @@ The current code base is far from perfect. While you complete the following task
 1. We added a button for changing the delivery status, but it doesn’t seem to do anything. Please fix it.
    ![](docs/part_1.png)
 1. Our call center asked us for more data on each order. Find a UX solution and implement it. They want to see the following when clicking on an item:
-	1. Name and quantity of the ordered items
-	1. Images of the items (or an image of the most expensive item)
-	1. The exact time of the order
+   1. Name and quantity of the ordered items
+   1. Images of the items (or an image of the most expensive item)
+   1. The exact time of the order
 
 ### Part B - Search and filters:
 
@@ -49,14 +52,14 @@ Note: this step is also mandatory.
 ### Part D - Bonus mission
 
 One of the things that really important to our users is to know the number of orders that still didn't deliver (orders with a status of not deliver)
-Think of a nice way to display, and keep it updated 
+Think of a nice way to display, and keep it updated
 
 ## General notes
 
-* Test your work well. Think of edge cases. Think of how users will use it, and make sure your work is of high quality
-* Stick to the best practices of the libraries used as much as possible
-* This task involves both the client and server code. Regardless of bonuses and part 3, in the end, you should have touched both areas. If you haven't - you probably are not covering all our requirements.
-* If you have any questions regarding the task itself or its environment, feel free to ask in the exam's e-mail. For general coding / technology questions, please consult stack overflow, forums and other sources of your choice.
+- Test your work well. Think of edge cases. Think of how users will use it, and make sure your work is of high quality
+- Stick to the best practices of the libraries used as much as possible
+- This task involves both the client and server code. Regardless of bonuses and part 3, in the end, you should have touched both areas. If you haven't - you probably are not covering all our requirements.
+- If you have any questions regarding the task itself or its environment, feel free to ask in the exam's e-mail. For general coding / technology questions, please consult stack overflow, forums and other sources of your choice.
 
 ## Submitting
 
