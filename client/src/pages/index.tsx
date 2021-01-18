@@ -11,6 +11,7 @@ import { OrderType } from '../models';
 
 export default function Home() {
     const dispatch = useDispatch();
+
     //Call API and update list
     useEffect(() => { dispatch(getOrders()); }, [dispatch]);
 
@@ -22,7 +23,7 @@ export default function Home() {
     const notDelivered: OrderType[] = orderList ? getNotDeliveredOrders(orderList) : [];
 
     //First time the list will be empty
-    if (filteredOrderList === undefined && orderList.length > 0) setFilteredOrderList(orderList);
+    if (filteredOrderList === undefined && orderList?.length > 0) setFilteredOrderList(orderList);
 
     const dropdownMenu = () => (
         <Dropdown.Menu className="dropdown-menu">

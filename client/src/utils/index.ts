@@ -21,18 +21,21 @@ export const getFilteredData = (orders: OrderType[], selectedFilter: FilterType[
     let filteredOrders: OrderType[] = [];
     let applyFilter = false;
 
-    orders.filter((order) => (
-        selectedFilter?.filter((data) => {
+    filteredOrders = orders.filter((order) => {
+        let find = [];
+        selectedFilter?.forEach((data) => {
             //Check any filter selected
             if (data.checked === true) {
                 if (data.name.toLocaleLowerCase() === order.fulfillmentStatus.toLocaleLowerCase() ||
                     data.name.toLocaleLowerCase() === order.billingInfo.status.toLocaleLowerCase()) {
-                    filteredOrders.push(order);
+                    find.push(orders);
                 }
                 applyFilter = true;
             }
         })
-    ));
+        if (find?.length > 0) return true;
+    })
+
     // if no filter selected then list will be same
     if (!applyFilter) filteredOrders = orders;
 
